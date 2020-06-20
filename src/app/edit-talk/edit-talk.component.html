@@ -1,0 +1,61 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <img *ngIf="data?.talk.image" [src]="data?.talk.image" alt="Talk image preview">
+  <mat-form-field>
+    <input matInput placeholder="Talk description" required formControlName="text">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Issue Type</mat-label>
+    <mat-select formControlName="issueType">
+      <mat-option [style.background]="i.color" *ngFor="let i of issueTypesArrayWithColor" [value]="i.name">
+        {{i.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Speaker" required formControlName="speaker">
+  </mat-form-field>
+  <!-- <mat-form-field>
+    <input matInput placeholder="Image URL" formControlName="image">
+  </mat-form-field> -->
+  <mat-form-field *ngIf="this.linked.length > 0">
+    <mat-label>Linked to {{this.linked.title}}</mat-label>
+    <mat-select formControlName="linked">
+      <mat-option *ngFor="let i of linked" [value]="i">
+        {{i.text}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <!-- Add the chip list and associate it with a new form control. -->
+    <mat-chip-list #tags formControlName="tags">
+      <!--
+          Render out all the chips that are set to the form control.
+          Also listen for the `removed` event which will notify use when to remove a tag.
+        -->
+      <mat-chip [style.background]="tag?.color ? tag.color : '#e0e0e0'"
+        *ngFor="let tag of this.formGroup.get('tags').value" (removed)="removeTag(tag)">
+        {{tag?.name}}
+        <!-- Add an icon that allows the user to delete a talk via click. -->
+        <mat-icon (click)="openColorPickerDialog(tag)"
+          class="mat-icon notranslate mat-chip-remove mat-chip-trailing-icon material-icons mat-icon-no-color">
+          color_lense</mat-icon>
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+
+      <!--
+          Input into which the user can type new tags. The `matChipInputTokenEnd` event will fire
+          whenever the user presses enter or they focus outside the input.
+        -->
+      <input placeholder="Add tags" [matChipInputFor]="tags" (matChipInputTokenEnd)="addTag($event)" />
+    </mat-chip-list>
+  </mat-form-field>
+  <mat-dialog-actions align="end">
+    <!--
+        mat-dialog-close is a directive from the `MatDialogModule` which can be used
+        to close the current dialog in a declarative way on element click.
+      -->
+    <button mat-button mat-dialog-close>Cancel</button>
+
+    <button mat-button type="submit" [disabled]="formGroup.invalid">{{data?.edit ? 'Update' : 'Add'}}</button>
+  </mat-dialog-actions>
+</form>

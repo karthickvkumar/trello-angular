@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Requirement Management",
+    "tracks": [
+      {
+        "id": "epic",
+        "title": "Epic",
+        "talks": []
+      },
+      {
+        "id": "release",
+        "title": "Release",
+        "talks": []
+      },
+      {
+        "id": "feature",
+        "title": "Feature",
+        "talks": []
+      },
+      {
+        "id": "story",
+        "title": "User Story",
+        "talks": []
+      },
+      {
+        "id": "task",
+        "title": "Task",
+        "talks": []
+      }
+    ]
+  }
+]
